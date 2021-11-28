@@ -2,10 +2,8 @@ import React, { useState } from 'react';
 import * as tf from "@tensorflow/tfjs"
 import facts from "../data/facts.json"
 
-
-const modelUrl = "https://raw.githubusercontent.com/tarun-29/Water-Project-Intern/master/tfjs/model.json"
 const model = async (temp, ph, setAns) => {
-    return await tf.loadLayersModel(modelUrl).then(m => {
+    return await tf.loadLayersModel("https://raw.githubusercontent.com/sivsnkr/design-project/main/tfjs/model.json").then(m => {
         if (parseFloat(temp) && parseFloat(ph)) {
             if (temp === 0 || ph === 0) {
                 alert("Please enter valid values")
@@ -15,9 +13,10 @@ const model = async (temp, ph, setAns) => {
                 var dat = [parseFloat(temp), parseFloat(ph)]
                 var shap = [1, 2]
                 var results = m.predict(tf.tensor2d(dat, shap));
-                //  console.log(results.dataSync())
                 Promise.resolve(results.dataSync()).then(s => {
                     setAns(s)
+                }).catch(e => {
+                    return
                 })
             }
         }
@@ -25,7 +24,8 @@ const model = async (temp, ph, setAns) => {
             alert("Enter numeric value")
             return
         }
-
+    }).catch(e => {
+        alert(e)
     })
 }
 
@@ -54,7 +54,7 @@ function Homepage() {
                         </div>
                         <div className="rule"></div>
                         <div className="form-footer" style={{ display: "flex", flexDirection: 'row' }}>
-                            <a href="/#" onClick={async () => { console.log(await model(temp, PH, setAns)) }}>Calculate<span className="fa fa-ban"></span></a>
+                            <a href="/#" onClick={async () => { await model(temp, PH, setAns) }}>Calculate<span className="fa fa-ban"></span></a>
                             <div style={{ color: 'black' }}>{parseFloat(ans).toFixed(4)}</div>
                         </div>
                     </form>
@@ -64,7 +64,7 @@ function Homepage() {
                     <h2>Facts</h2>
                     <p>{facts[count].Fact}</p>
                     <div className="content">
-                        <a style = {{color : "white"}}onClick={(e) => setCount(count + ((Math.floor(Math.random() * 100))) - count)}>New Fact</a>
+                        <button style = {{color : "white"}}onClick={(e) => setCount(count + ((Math.floor(Math.random() * 100))) - count)}>New Fact</button>
                     </div>
                 </div>) : (<div>No Fact</div>)}
             </div>
