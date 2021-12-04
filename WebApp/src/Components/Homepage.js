@@ -38,10 +38,7 @@ function Homepage() {
         <div className = "ocean">
             <div style={{ textAlign: 'center', fontSize: 25, position : "fixed", top : "30px", left : "35%" , color : "black"}}>See how much oxygen disolved in the water</div>
             <div style={{ display: "flex", flexDirection: 'row-reverse', justifyContent: "space-between" , alignItems : "center", width : "60%", margin: "30px auto",  position : "fixed", top : "90px", left : "15%" }}>
-                <div style={{ 
-                    // marginTop: 20 
-                }}
-                    className="card-form">
+                <div className="card-form">
                     <form className="signup">
                         <div className="form-title">Predictions of D.O(mg/L)</div>
                         <div className="form-body">
@@ -64,7 +61,7 @@ function Homepage() {
                     <h2>Facts</h2>
                     <p>{facts[count].Fact}</p>
                     <div className="content">
-                        <button style = {{color : "white"}}onClick={(e) => setCount(count + ((Math.floor(Math.random() * 100))) - count)}>New Fact</button>
+                        <a style = {{color : "white"}}onClick={(e) => setCount(count + ((Math.floor(Math.random() * 100))) - count)}>New Fact</a>
                     </div>
                 </div>) : (<div>No Fact</div>)}
             </div>
